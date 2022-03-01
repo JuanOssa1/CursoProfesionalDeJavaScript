@@ -23,31 +23,51 @@
     </main>
 
     <script>
-      function MediaPlayer(config) {
-        this.media = config.el;
+      const video = document.querySelector("video")//Esto selecciona lo que va a manipular en este caso
+      //es el video
+      const button = document.querySelector("button")
+      var reproduciendo = false;
+
+
+      function controlVideo(){
+        //reproduciendo ? video.play() : video.pause(); 
+        
+        reproduciendo === false ? video.play() : video.pause();
+
+        /*
+        if(reproduciendo===false){
+          video.play();
+        } else {
+          video.pause();
+        }
+        */
+      }
+      
+      video.onpause = () =>{/*Mira si el video esta pausado*/
+        reproduciendo = false;
+        console.log("onpause");
+      }
+      video.onplaying = () =>{
+        reproduciendo = true;
+        console.log("onplaying");
+      }
+      button.onclick = () => controlVideo();
+  
+      
+
+      /*
+      function MediaPlayer(config) { 
+        this.media = config.el
       }
 
-      MediaPlayer.prototype.play = function() {
-        this.media.play();
-      };
+      MediaPlayer.prototype.play = function(){
+        this.media.play();   
+      }
+      
+      const player = new MediaPlayer({el: video});
 
-      MediaPlayer.prototype.pause = function() {
-        this.media.pause();
-      };
-
-      MediaPlayer.prototype.togglePlay = function() {
-        if (this.media.paused) {
-          this.play();
-        } else {
-          this.pause();
-        }
-      };
-
-      const video = document.querySelector('video');
-      const player = new MediaPlayer({ el: video });
-
-      const button = document.querySelector('button');
-      button.onclick = () => player.togglePlay();
+      button.onclick = () => player.play();
+      */
     </script>
   </body>
 </html>
