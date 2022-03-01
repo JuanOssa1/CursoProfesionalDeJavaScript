@@ -26,13 +26,13 @@
       const video = document.querySelector("video")//Esto selecciona lo que va a manipular en este caso
       //es el video
       const button = document.querySelector("button")
-      var reproduciendo = false;
+      var reproduciendo = true;
 
 
       function controlVideo(){
         //reproduciendo ? video.play() : video.pause(); 
         
-        reproduciendo === false ? video.play() : video.pause();
+        reproduciendo ? video.play() : video.pause();
 
         /*
         if(reproduciendo===false){
@@ -44,12 +44,10 @@
       }
       
       video.onpause = () =>{/*Mira si el video esta pausado*/
-        reproduciendo = false;
-        console.log("onpause");
+        reproduciendo = true;
       }
       video.onplaying = () =>{
-        reproduciendo = true;
-        console.log("onplaying");
+        reproduciendo = false;
       }
       button.onclick = () => controlVideo();
   
