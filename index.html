@@ -3,7 +3,7 @@
     <title>PlatziMediaPlayer.js</title>
     <link
       rel="stylesheet"
-      href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
+      href="./assets/index.css"
     />
     <link rel="stylesheet" href="./assets/index.css" />
   </head>
@@ -21,51 +21,11 @@
 
       <button>Play/Pause</button>
     </main>
-
-    <script>
-      const video = document.querySelector("video")//Esto selecciona lo que va a manipular en este caso
-      //es el video
-      const button = document.querySelector("button")
-      var reproduciendo = true;
+    <script type="module" src="./assets/index.js"></script>
+    <!--Si quisiera poner el metodo en que ejecuta le pondria script defer src="./assets/index.js" /script
+      asi pero como esta al final no es necesario si le pongo module lo que va  a hacer es limitar el alcance
+    de las varables-->
 
 
-      function controlVideo(){
-        //reproduciendo ? video.play() : video.pause(); 
-        
-        reproduciendo ? video.play() : video.pause();
-
-        /*
-        if(reproduciendo===false){
-          video.play();
-        } else {
-          video.pause();
-        }
-        */
-      }
-      
-      video.onpause = () =>{/*Mira si el video esta pausado*/
-        reproduciendo = true;
-      }
-      video.onplaying = () =>{
-        reproduciendo = false;
-      }
-      button.onclick = () => controlVideo();
-  
-      
-
-      /*
-      function MediaPlayer(config) { 
-        this.media = config.el
-      }
-
-      MediaPlayer.prototype.play = function(){
-        this.media.play();   
-      }
-      
-      const player = new MediaPlayer({el: video});
-
-      button.onclick = () => player.play();
-      */
-    </script>
   </body>
 </html>
