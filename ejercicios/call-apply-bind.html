@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <title>
+      Function.prototype.call, Function.prototype.apply, Function.prototype.bind
+    </title>
+  </head>
+
+  <body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <ul>
+      <li><button class="call-to-action">Aprender</button></li>
+      <li><button class="call-to-action">Aprender Más</button></li>
+      <li><button class="call-to-action">¡Nunca parar de Aprender!</button></li>
+    </ul> 
+
+    <script>
+
+      /*En general todas estas funciones son utiules como a la hora de que les quiero asignar 
+      valores es como una forma de llamarlas y de esta forma yo poder dar los valores que yo quiero
+      o9 que por ejemplo de un html me llegue un arreglo y lo quiera asignar a ciertas funciones
+      me puede servir*/
+      // Establece `this` usando `call` con este estabelcemos cual va a ser el this
+      function saludar(){
+        console.log(`Hola soy ${this.name} ${this.apellido}`);
+      }
+      const richard = {
+        name: "Richard",
+        apellido: "Kaufman Lopez"
+      }
+      /*Todas las funciones tienen call, apply y bind
+      aqui como parametro le estoy dando el this que quiero que sea this*/
+      // Establece `this` usando `call` y pasar argumentos a la funció
+      saludar.call(richard)
+
+      function caminar(metros,direccion){
+        console.log(`${this.name} camina direccion ${metros} hacia ${direccion}`);
+      }
+      caminar.call(richard, 400, 'norte');
+      
+      // Establece `this` usando `apply` y pasar argumentos a la función hace lo mismo
+      /*Con la direcia  que algunas ocasiones conviene mas usar apply cporque hay veces que siomplemente quierop
+      mandar el arreglo*/
+      const valores = [800,'noreste']
+      caminar.apply(richard,valores);
+      /*
+      Call, con C de coma
+      Apply, con A de arreglo
+      */
+      
+      /* Establecer `this` en una nueva función usando `bind`
+      bin es parecido a call y a apply con la diferencia quwe crea una 
+      nueva funcion esta tendra el this ya integrado*/
+      
+      const daniel = {name: "Daniel", apellido: "Sanchez"}
+      saludar.bind(daniel);
+      /*Como creo una nueva funcion entonces hay que sarle una variable
+      esta vaina lo que hace es como compactar todo y en vez de mandar nombre, luego apellido
+      y cada uno por aparte simplemente manmdo el objeto y ya hace todo*/
+      const danielSaluda = saludar.bind(daniel);
+      danielSaluda();
+
+      const danielCamina = caminar.bind(daniel);
+      danielCamina(1000, "este");/*como podemos ver cuando llamo bind ya le pase
+      a daniel y como crea una nuevba funcion pues ahi si le mando lo que quiro*/
+      const danielCamina2 = caminar.bind(daniel, 3000, "sur");
+      danielCamina2(); /*Tambien se puede de esta forma es mas resumido*/
+      // Cuándo es útil usar uno de estos métodos
+      /*Couring llamamos parcialmente los argumentos y luego llamamos los demas
+      ayuda a reutilizar codigo hay que recordar de que luego uno debe guardar esta
+      funcion*/
+
+      const buttons = document.getElementsByClassName('call-to-action');
+      //buttons.array.forEach(buttons, button => { button.onClick = () => alert("Nunca apres de aprender");});
+
+      //Esto nos marcara error porque buttons es un Node list no una lista como tal
+      /*Pero si tiene algunasd propiedades como length*/
+
+      /*AACA LO QUE SE HIZO LLAMAER FUE LA FUNCION CON BOTONES COMO CONTEXTO Y CON ESTO BASTA PARA QUE
+    PARA QWUE EL FOREACXH SIRVA YA QUE SOLO NEDCESITA EL LENG PORQUE NODELSIT SI LO TIEN*/
+      Array.prototype.forEach.call(buttons, button => {
+        button.onClick = () => alert("si aja ");
+      });
+    </script>
+  </body>
+</html>

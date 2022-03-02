@@ -1,0 +1,127 @@
+<html>
+  <head>
+    <title>this</title>
+  </head>
+
+  <body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <h1>
+      <code>this</code> se refiere a un objeto. Ese objeto es el que actualmente
+      está ejecutando un pedazo de código.
+    </h1>
+
+    <script>
+      //this en glbal scope
+      /*Simepre que usemos this en el contexto global el browser lo
+      va a asignar a window*/
+      console.log(`this: ${this}`);
+      //this en funciones
+      /*Como estamos ejecutando la funcion directamente
+      javascript asigna que this es window por default a excepcion de que javascript este en
+      stirct mode
+      */
+      function whoIsThis(){
+        return this;
+      }
+      console.log(whoIsThis());
+      /*this en strict mode*/
+      /*Strict sirve a evitar ciertos problemas y errores
+      que pueden suceder y salen temprano y no en produccion que es mas grave*/
+      function whoIsThisStrict(){
+        'use strict';
+        return this;
+      }
+      console.log(whoIsThisStrict());
+      /*This en el contexto de un objeto
+      en resumidad cuentas this es como el padre de lo
+      que esta ejecutanto por eso cuando es en global es 
+      la ventana porque la ventana es la padre de todo*/
+      const person = {
+        name: "Gabriel",
+        saludar: function(){
+          console.log(`Hola soy ${this.name}`);
+        }
+      }
+      person.saludar();
+      /*Cuando sacamos a una funcion de un objeto
+      ahi no imprime nada porque como no esta haciendo referencia
+      al objeto ya que accion() no es una funcion this,name no existe
+      */
+      const accion = person.saludar;
+      accion();
+
+      /*This en el conexto de una clase se refiere a la instacia del objeto
+      */
+     /*Esto esta funcionando como construsctor
+     mno se puede asignar this directamernte pero si una propiedad de this
+     */
+     function Person (name) {
+       this.name = name;
+     }
+     Person.prototype.saludar = function(){
+      console.log(`Hola soy ${this.name}`);
+     }
+     const angela = new Person("Angela");
+     angela.saludar();
+
+
+
+
+
+
+
+
+
+
+
+/*
+      // this en el scope global
+      console.log(`this: ${this}`);
+
+      // this en el scope de una función
+      function whoIsThis() {
+        return this;
+      }
+
+      console.log(`whoIsThis(): ${whoIsThis()}`);
+
+      // this en el scope de una función en strict mode
+      function whoIsThisStrict() {
+        'use strict';
+        return this;
+      }
+
+      console.log(`whoIsThisStrict(): ${whoIsThisStrict()}`);
+
+      // this en el contexto de un objeto
+      const person = {
+        name: 'Gabriel',
+        saludar: function() {
+          console.log(`Hola soy ${this.name}`);
+        },
+      };
+
+      person.saludar();
+
+      // this cuando sacamos a una función de un objeto
+      const accion = person.saludar;
+      accion();
+
+      // this en el contexto de una "clase"
+      function Person(name) {
+        // this = {}
+        this.name = name;
+      }
+
+      Person.prototype.saludar = function() {
+        console.log(`Me llamo ${this.name}`);
+      };
+
+      const angela = new Person('Angela');
+      angela.saludar();
+      */
+    </script>
+  </body>
+</html>

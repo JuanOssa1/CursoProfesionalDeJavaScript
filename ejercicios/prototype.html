@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <title>Prototype</title>
+  </head>
+
+  <body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <script>
+      // Un objeto común y corriente
+      // const zelda = {
+      //   name: 'Zelda',
+      // };
+
+      // zelda.saludar = function() {
+      //   console.log(`Hola soy ${this.name}`);
+      // };
+
+      // zelda.saludar();
+
+      // const link = {
+      //   name: 'Link',
+      // };
+
+      // link.saludar = function() {
+      //   console.log(`Hola soy ${this.name}`);
+      // };
+
+      // link.saludar();
+
+      // Seamos un poco más eficientes
+      // function Hero(name) {
+      //   const hero = {
+      //     name: name,
+      //   };
+
+      //   hero.saludar = function() {
+      //     console.log(`Hola soy ${this.name}`);
+      //   };
+
+      //   return hero;
+      // }
+      // const zelda = Hero('Zelda');
+      // zelda.saludar();
+
+      // const link = Hero('Link');
+      // link.saludar();
+
+      // Aun podemos mejorar más y evitar tener que crear la misma función cada vez
+
+      
+
+      // Object.create
+      /*Recibver un obnejeto y crea un nuevo objeto*/
+      /*Esto seria como el costructor*/
+      /*
+      const heroMethods = {
+        saludar: function () {
+          console.log(`Me llamo ${this.name}`);
+        },
+      };
+
+      function Hero(name) {
+        const hero = Object.create(heroMethods)/*Todas la propiedades de hero methos pasan a ser 
+        ahora de este hero*/
+
+        /*Ahora Hero tiene todas esas funciones que habiamos definido
+        return hero;
+      }
+      const zelda = Hero("Zelda");
+      zelda.saludar();
+
+      const link = Hero("Link");
+      link.saludar();
+      const nuevoObjeto = Object.create;
+      */
+
+
+
+
+      /*Prototype es un objeto vacio pero como es un objeto le puedo agregar propiedades
+      */
+
+
+      function Hero(name) {
+        const hero = Object.create(Hero.prototype)/*Todas la propiedades de hero methos pasan a ser 
+        ahora de este hero*/
+        this.name = name;/*Toca usar this porque si no te dice undefined no es automatico
+        como en java*/
+        /*Ahora Hero tiene todas esas funciones que habiamos definido*/
+        return hero;
+      }
+      Hero.prototype.saludar = function() {
+        console.log(`New: ${this.name}`);
+      };
+      const zelda = new Hero("Zelda");
+      zelda.saludar();
+      /*El atajo que esta haciendo new es el Object.Create
+      y siemnpr4e lo sacara de Hero.Prototype y eso lo almacena como en
+      un this y como ya klo asigno al this entonces ya no hago Hero.name si no this.name */
+      const link = new Hero("Link");
+      link.saludar();
+
+
+    </script>
+  </body>
+</html>
