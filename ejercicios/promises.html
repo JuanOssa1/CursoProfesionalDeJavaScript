@@ -97,7 +97,8 @@
         return movies;
       }
 
-      /*Aqui lo que obtendremos es la primera promesa que se cumpla*/
+      /*Aqui lo que obtendremos es la primera promesa que se cumpla
+      no siempre saldra la misma ya que es una carrera*/
       async function getFastestTopMovie() {
         const ids = await getTopMoviesIds();
         const moviePromises = ids.map(id => getMovie(id));
