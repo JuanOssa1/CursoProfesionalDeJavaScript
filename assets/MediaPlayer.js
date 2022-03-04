@@ -27,8 +27,34 @@ class MediaPlayer {
     this._initPlugins();
   }
   _initPlugins() {
+    const player = {
+      play: () => this.play(),
+      pause: () => this.pause(),
+      /*Esto lo colocamos porque este es el que nos va a dar acceso a la clase
+      principal que es media player ya que dentro del metodo muted quiero acceder
+      a esta*/
+      media: this.media,
+      /*se pone get seguido de muted que es la propiedad virtual*/
+      get muted(){
+        return this.media.muted;
+      },
+      set muted(value){
+        /*
+        if(value===true){
+          this.media.muted=true;
+        } else {
+          this.media.muted=false;
+        }
+        O la otra forma simple
+        */
+       this.media.muted = value;
+      }
+    }
+    /*Si yo ahora mando player en vez del this que estoda la clase
+    no todas las funciones van a tener acceso lo cual en parte es bueno porque 
+    asi puedo controlar que metodos pueden acceder a que */
     this.plugins.forEach((plugin) => {
-      plugin.run(this);
+      plugin.run(player);
     });
   }
   play() {
