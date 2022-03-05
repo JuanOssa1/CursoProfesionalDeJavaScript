@@ -22,6 +22,7 @@
       const img = document.getElementById('huge-image');
       const loadButton = document.getElementById('load');
       const stopButton = document.getElementById('stop');
+      let controller;
 
       function startLoading() {
         loadButton.disabled = true;
@@ -38,10 +39,29 @@
 
       loadButton.onclick = async function() {
         startLoading();
+        /*Nos da un  crontrolador para poder abortar*/
+        controller = new AbortController()
+        try {
+          const response = await fetch(url, {signal:controller.signal})
+          /*blob es el binario de la peticion la iamgen en forma binaria*/
+          const blob = await response.blob();
+          /*Asigana una url con base al blob*/
+          const imgUrl = URL.createObjectURL(blob);
+          img.src = imgUrl;
+          
+        } catch (error) {
+          console.log(error.message)
+        }
+
+
+
         stopLoading();
       };
 
       stopButton.onclick = function() {
+        /*Cuandso se cancela un fetch se lanza una excepcion por lo cual es bueno usar
+        try catch*/
+        controller.abort();
         stopLoading();
       };
     </script>
