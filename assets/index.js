@@ -21,3 +21,13 @@ const buttonPlay = document.getElementById('pauseplay');
 
 buttonPlay.onclick = () => player.togglePlay();
 buttonMute.onclick = () => player.toggleMute();
+
+/**Esto sirve para verificar si el navegador tiene esta utilidad ya que no
+ * todos los bnavegadores la tienen debido a que todavia es muy nueva
+ */
+if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/sw.js').catch(error => {
+            console.log(error.message);
+      });
+
+}
