@@ -21,7 +21,7 @@ self.addEventListener('fetch', event => {
     */
     request.method === "GET" ? event.respondWith(cachedResponse(request)) : true
 
-
+    /**Aqui actualizamos el cache para que no se quede con versiones viejas*/
     event.waitUntil(updateCache(request));
 
 });
