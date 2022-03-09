@@ -154,7 +154,18 @@ async function precache() {
    * porque esto lo que retorna es una promesa
    */
   const cache = await caches.open(VERSION);
-  return cache.addAll(['/', '/index.html', '/assets/index.js', '/assets/MediaPlayer.js', '/assets/plugins/AutoPlay.js', '/assets/plugins/AutoPause.js', '/assets/index.css', '/assets/BigBuckBunny.mp4']);
+  return cache.addAll([
+    /*
+        '/',
+    '/index.html',
+    '/assets/index.js',
+    '/assets/MediaPlayer.js',
+    '/assets/plugins/AutoPlay.js',
+    '/assets/plugins/AutoPause.js',
+    '/assets/index.css',
+    '/assets/BigBuckBunny.mp4',
+    */
+  ]);
 }
 
 async function cachedResponse(request) {
@@ -211,7 +222,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43155" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34657" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

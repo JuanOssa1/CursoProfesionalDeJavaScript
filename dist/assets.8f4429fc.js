@@ -261,68 +261,66 @@ AutoPlay.prototype.run = function (player) {
 
 var _default = AutoPlay;
 exports.default = _default;
-},{}],"assets/plugins/AutoPause.js":[function(require,module,exports) {
+},{}],"assets/plugins/AutoPause.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
 
-class AutoPause {
-  constructor() {
-    this.threshold = 0.25;
+var AutoPause =
+/** @class */
+function () {
+  function AutoPause() {
     /**Como vimos en clases anteriores ahora el bind va a hacer esta vaina
-     * general porque si la meto dentro del intersection observer no puedo acceder 
+     * general porque si la meto dentro del intersection observer no puedo acceder
      * a ella en otros metodos porque seria undefined
      */
-
+    this.threshold = 0.25;
     this.handleIntersection = this.handleIntersection.bind(this);
     this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
   }
 
-  run(player) {
+  AutoPause.prototype.run = function (player) {
     this.player = player;
     /*Recordar que esto se hace para ya pueda acceder a ella desde adentro mas abajo*/
 
-    const observer = new IntersectionObserver(this.handleIntersection, {
+    var observer = new IntersectionObserver(this.handleIntersection, {
       threshold: this.threshold
     });
     /**Recibe dos argumentos
     el handler que recibe el anuncio de lo sucedido y el objeto de configuracion
     es como el parametro que definimos como alerta en este caso como es lo que se ve del contenedor
-    queremos que este mirando la pantalla y cugit ando esta llegue a solo un 25% nos avise 
+    queremos que este mirando la pantalla y cugit ando esta llegue a solo un 25% nos avise
     threshold significa limite en ingles ocurre cada cada que pase por ese limite*/
 
     observer.observe(this.player.media);
     /**Aqui defino que quiero que se observe que es rttda la pantalla*/
 
     document.addEventListener("visibilitychange", this.handleVisibilityChange);
-  }
+  };
 
-  handleIntersection(entries) {
-    /**Le pasa una lista de todos los objetos que estamos observando y como 
-    en este caso solo hay uno pues... */
-    const entry = entries[0];
+  AutoPause.prototype.handleIntersection = function (entries) {
+    var entry = entries[0];
     /**intersection ratio es un  atributo que ya tiene entry aqui
      * ademas estoy diciendo que esta visible es decir si esta intesrcetion es mayor
      * al limite que he puesto es porque se puede ver todavia lo suficiente
      */
 
-    const isVisible = entry.intersectionRatio >= this.threshold;
+    var isVisible = entry.intersectionRatio >= this.threshold;
     isVisible ? this.player.play() : this.player.pause();
     console.log(entry);
-  }
+  };
 
-  handleVisibilityChange() {
-    const isVisible = document.visibilityState === "visible";
+  AutoPause.prototype.handleVisibilityChange = function () {
+    var isVisible = document.visibilityState === "visible";
     isVisible ? this.player.play() : this.player.pause();
-  }
+  };
 
-}
+  return AutoPause;
+}();
 
-var _default = AutoPause;
-exports.default = _default;
+exports.default = AutoPause;
 },{}],"assets/index.js":[function(require,module,exports) {
 "use strict";
 
@@ -330,7 +328,7 @@ var _MediaPlayer = _interopRequireDefault(require("./MediaPlayer.js"));
 
 var _AutoPlay = _interopRequireDefault(require("./plugins/AutoPlay.js"));
 
-var _AutoPause = _interopRequireDefault(require("./plugins/AutoPause.js"));
+var _AutoPause = _interopRequireDefault(require("./plugins/AutoPause.ts"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -366,7 +364,7 @@ if ('serviceWorker' in navigator) {
     console.log(error.message);
   });
 }
-},{"./MediaPlayer.js":"assets/MediaPlayer.js","./plugins/AutoPlay.js":"assets/plugins/AutoPlay.js","./plugins/AutoPause.js":"assets/plugins/AutoPause.js","/home/juano/CursoProfesionalDeJavaScript/sw.js":[["sw.js","sw.js"],"sw.js.map","sw.js"]}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./MediaPlayer.js":"assets/MediaPlayer.js","./plugins/AutoPlay.js":"assets/plugins/AutoPlay.js","./plugins/AutoPause.ts":"assets/plugins/AutoPause.ts","/home/juano/CursoProfesionalDeJavaScript/sw.js":[["sw.js","sw.js"],"sw.js.map","sw.js"]}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -394,7 +392,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43155" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34657" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
