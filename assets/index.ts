@@ -7,17 +7,17 @@ var reproduciendo = true;
 
 button.onclick = () => controlVideo();
 */
-import MediaPlayer from './MediaPlayer.js';
-import AutoPlay from './plugins/AutoPlay.js';
-import AutoPause from './plugins/AutoPause.ts';
+import MediaPlayer from './MediaPlayer';
+import AutoPlay from './plugins/AutoPlay';
+import AutoPause from './plugins/AutoPause';
 
 const video = document.querySelector('video');
 const player = new MediaPlayer({ el: video, plugins: [new AutoPlay(), new AutoPause()] });
 /**Aqui se observa */
 
-const buttonMute = document.getElementById('muteunmute');
+const buttonMute: HTMLElement = document.getElementById('muteunmute');
 
-const buttonPlay = document.getElementById('pauseplay');
+const buttonPlay: HTMLElement = document.getElementById('pauseplay');
 
 buttonPlay.onclick = () => player.togglePlay();
 buttonMute.onclick = () => player.toggleMute();
