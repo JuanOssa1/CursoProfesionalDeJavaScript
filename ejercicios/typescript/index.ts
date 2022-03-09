@@ -83,3 +83,36 @@ function fullName(firstName: string, lastName?: string): string{
 }
 const miNombre = fullName('Juan');
 console.log(miNombre);
+
+
+//Interfaces
+interface Rectangulo {
+    ancho: number
+    alto: number
+    color?: Color
+}
+
+/**Aqui estoy haciendo uso de esa interface y como en java 
+ * pues tiene que tener todo loq ue tiene esta inter4faz
+ */
+let rect: Rectangulo = {
+    ancho: 4,
+    alto: 6,
+    color: Color.Azul
+
+}
+
+function area(r: Rectangulo){
+    return r.alto*r.ancho;
+}
+const areaRect = area(rect);
+console.log(areaRect);
+
+console.log(rect.toString());
+
+
+/**Aqui es como si estuviera editando la funcion string */
+rect.toString  = function()  {
+    return this.color ? `Un rectangulo ${this.color}` : `Un rectangulo`
+}
+console.log(rect.toString());

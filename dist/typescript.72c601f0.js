@@ -203,6 +203,30 @@ function fullName(firstName, lastName) {
 
 var miNombre = fullName('Juan');
 console.log(miNombre);
+/**Aqui estoy haciendo uso de esa interface y como en java
+ * pues tiene que tener todo loq ue tiene esta inter4faz
+ */
+
+var rect = {
+  ancho: 4,
+  alto: 6,
+  color: Color.Azul
+};
+
+function area(r) {
+  return r.alto * r.ancho;
+}
+
+var areaRect = area(rect);
+console.log(areaRect);
+console.log(rect.toString());
+/**Aqui es como si estuviera editando la funcion string */
+
+rect.toString = function () {
+  return this.color ? "Un rectangulo ".concat(this.color) : "Un rectangulo";
+};
+
+console.log(rect.toString());
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -231,7 +255,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43231" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43155" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

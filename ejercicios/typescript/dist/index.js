@@ -70,3 +70,22 @@ function fullName(firstName, lastName) {
 }
 var miNombre = fullName('Juan');
 console.log(miNombre);
+/**Aqui estoy haciendo uso de esa interface y como en java
+ * pues tiene que tener todo loq ue tiene esta inter4faz
+ */
+var rect = {
+    ancho: 4,
+    alto: 6,
+    color: Color.Azul
+};
+function area(r) {
+    return r.alto * r.ancho;
+}
+var areaRect = area(rect);
+console.log(areaRect);
+console.log(rect.toString());
+/**Aqui es como si estuviera editando la funcion string */
+rect.toString = function () {
+    return this.color ? "Un rectangulo " + this.color : "Un rectangulo";
+};
+console.log(rect.toString());
