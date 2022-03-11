@@ -157,6 +157,7 @@ function () {
 
   MediaPlayer.prototype.initPlayer = function () {
     this.container = document.createElement('div');
+    this.container.style.position = 'relative';
     this.media.parentNode.insertBefore(this.container, this.media);
     this.container.appendChild(this.media);
   };
@@ -441,6 +442,7 @@ var AdsPlugin =
 function () {
   function AdsPlugin() {
     this.ads = Ads_1.default.getInstance();
+    this.adsContainer = document.createElement('div');
     /**Recordar que esto se hace por el scope y para que el event listener pueda
      * acceder al this que queremos
      */
@@ -450,6 +452,7 @@ function () {
 
   AdsPlugin.prototype.run = function (player) {
     this.player = player;
+    this.player.container.appendChild(this.adsContainer);
     this.media = this.player.media;
     this.media.addEventListener('timeupdate', this.handleTimeUpdate);
   };
@@ -466,13 +469,20 @@ function () {
   };
 
   AdsPlugin.prototype.renderAd = function () {
+    var _this = this;
+
     if (this.currentAd) {
       return;
     }
 
     var ad = this.ads.getAd();
     this.currentAd = ad;
+    this.adsContainer.innerHTML = "\n        <div class=\"ads\">\n          <a class=\"ads__link\" href=\"".concat(this.currentAd.url, "\" target=\"_blank\">\n            <img class=\"ads__img\" src=\"").concat(this.currentAd.imageUrl, "\" />\n            <div class=\"ads__info\">\n              <h5 class=\"ads__title\">").concat(this.currentAd.title, "</h5>\n              <p class=\"ads__body\">").concat(this.currentAd.body, "</p>\n            </div>\n          </a>\n        </div>\n      ");
     console.log(ad);
+    setTimeout(function () {
+      _this.currentAd = null;
+      _this.adsContainer.innerHTML = '';
+    }, 10000);
   };
 
   return AdsPlugin;
@@ -564,7 +574,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43459" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44411" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
