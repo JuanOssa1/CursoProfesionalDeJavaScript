@@ -10,9 +10,10 @@ button.onclick = () => controlVideo();
 import MediaPlayer from './MediaPlayer';
 import AutoPlay from './plugins/AutoPlay';
 import AutoPause from './plugins/AutoPause';
+import Ads from './plugins/Ads';
 
 const video = document.querySelector('video');
-const player = new MediaPlayer({ el: video, plugins: [new AutoPlay(), new AutoPause()] });
+const player = new MediaPlayer({ el: video, plugins: [new AutoPlay(), new AutoPause(), new Ads()] });
 /**Aqui se observa */
 
 const buttonMute: HTMLElement = document.getElementById('muteunmute');

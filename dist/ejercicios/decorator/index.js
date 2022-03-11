@@ -117,84 +117,74 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"sw.js":[function(require,module,exports) {
-/**Instala este service workker en el navegador */
-const VERSION = "v1";
-self.addEventListener('install', event => {
-  /**
-   * aqui creo la cache y espero a que se complete, es decir, espera a que la promesa se complete
-   */
-  event.waitUntil(precache());
-});
-/**Ahora para llamar en la cache:*/
+})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-self.addEventListener('fetch', event => {
-  const request = event.request; //solo nos interesa usar la cache con el get porque los demas metodos 
-
-  /**tienen iinformacion que no debe ser almacenada ahi porque no se
-   * usa
-   */
-
-  /*
-  if(request.method !== 'GET'){
-      return
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
   }
-  event.respondWith(cachedResponse(request));
-  */
 
-  request.method === "GET" ? event.respondWith(cachedResponse(request)) : true;
-  /**Aqui actualizamos el cache para que no se quede con versiones viejas*/
-
-  event.waitUntil(updateCache(request));
-});
-
-async function precache() {
-  /**Esto nos da una instancia de un cache  y pues
-   * adentro va el nombre de la version que le definimos se le pone await y async
-   * porque esto lo que retorna es una promesa
-   */
-  const cache = await caches.open(VERSION);
-  return cache.addAll([
-    /*
-        '/',
-    '/index.html',
-    '/assets/index.js',
-    '/assets/MediaPlayer.js',
-    '/assets/plugins/AutoPlay.js',
-    '/assets/plugins/AutoPause.js',
-    '/assets/index.css',
-    '/assets/BigBuckBunny.mp4',
-    */
-  ]);
+  return bundleURL;
 }
 
-async function cachedResponse(request) {
-  const cache = await caches.open(VERSION);
-  /**A   Arriba hago una instancia de la cahce y abajo lo que hago
-   * es hacerle un request que normalmente haria en internet normal al cache para ver si este
-   * lo tiene almacenado
-  */
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
 
-  const response = await cache.match(request);
-  /**Y aqui hace el fecth que es el que me trae toda informacion en caso
-   * de que la informacion no este en el cache
-   */
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
 
-  /**y el || lo que hace es que si lo primero es falso o undefined retorna lo de la derecha */
-
-  return response || fetch(request);
-  /**El problema de usar cache asi por mas es que si actualizamos el index
-   * pero ya hay uno en cache seguira tomando el de cache y no hhara las actualizaciones
-   * nuevas para eevitar esto hacemos un metodo que busque y actualice la cache 
-   */
+  return '/';
 }
 
-async function updateCache(request) {
-  const cache = await caches.open(VERSION);
-  const response = await fetch(request);
-  return response.status === 200 ? cache.put(request, response) : true;
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
 }
-},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -397,5 +387,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","sw.js"], null)
-//# sourceMappingURL=/sw.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/ejercicios/decorator/index.js.map

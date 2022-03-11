@@ -117,83 +117,89 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"sw.js":[function(require,module,exports) {
-/**Instala este service workker en el navegador */
-const VERSION = "v1";
-self.addEventListener('install', event => {
-  /**
-   * aqui creo la cache y espero a que se complete, es decir, espera a que la promesa se complete
-   */
-  event.waitUntil(precache());
-});
-/**Ahora para llamar en la cache:*/
+})({"ejercicios/decorator/index.ts":[function(require,module,exports) {
+var Field =
+/** @class */
+function () {
+  function Field(input) {
+    var _this = this;
 
-self.addEventListener('fetch', event => {
-  const request = event.request; //solo nos interesa usar la cache con el get porque los demas metodos 
-
-  /**tienen iinformacion que no debe ser almacenada ahi porque no se
-   * usa
-   */
-
-  /*
-  if(request.method !== 'GET'){
-      return
-  }
-  event.respondWith(cachedResponse(request));
-  */
-
-  request.method === "GET" ? event.respondWith(cachedResponse(request)) : true;
-  /**Aqui actualizamos el cache para que no se quede con versiones viejas*/
-
-  event.waitUntil(updateCache(request));
-});
-
-async function precache() {
-  /**Esto nos da una instancia de un cache  y pues
-   * adentro va el nombre de la version que le definimos se le pone await y async
-   * porque esto lo que retorna es una promesa
-   */
-  const cache = await caches.open(VERSION);
-  return cache.addAll([
-    /*
-        '/',
-    '/index.html',
-    '/assets/index.js',
-    '/assets/MediaPlayer.js',
-    '/assets/plugins/AutoPlay.js',
-    '/assets/plugins/AutoPause.js',
-    '/assets/index.css',
-    '/assets/BigBuckBunny.mp4',
+    this.input = input;
+    this.errors = [];
+    var errorMessage = document.createElement('p');
+    errorMessage.className = 'text-danger';
+    this.input.parentNode.insertBefore(errorMessage, this.input.nextSibling);
+    /**Valida cada que se cambia el input y si se produce un error
+     * lo a;ande al arreglo y lo pone en error message
     */
-  ]);
+
+    /**En general aqui lo que estamos haciendo es lo de los campos requeridos
+     * cuando no ponga un campo requerido deberia avisarle que es obligatorio
+     * escribirlo supongo que aqui usamos decorator
+     * porque puede que no unicamente vaya a decir requerido tambien puede decir
+     * otras cosas adicionales a eso y si no usaramos decorator tocaria
+     * que estar modificando la clase
+     */
+
+    this.input.addEventListener('input', function () {
+      _this.errors = [];
+
+      _this.validate();
+
+      errorMessage.innerText = _this.errors[0] || '';
+    });
+  }
+
+  Field.prototype.validate = function () {};
+
+  return Field;
+}();
+
+function RequiredFieldDecorator(field) {
+  var validate = field.validate;
+
+  field.validate = function () {
+    validate();
+    var value = field.input.value;
+
+    if (!value) {
+      field.errors.push('Requerido');
+    }
+  };
+
+  return field;
 }
 
-async function cachedResponse(request) {
-  const cache = await caches.open(VERSION);
-  /**A   Arriba hago una instancia de la cahce y abajo lo que hago
-   * es hacerle un request que normalmente haria en internet normal al cache para ver si este
-   * lo tiene almacenado
-  */
+function EmailFieldDecorator(field) {
+  var validate = field.validate;
 
-  const response = await cache.match(request);
-  /**Y aqui hace el fecth que es el que me trae toda informacion en caso
-   * de que la informacion no este en el cache
-   */
+  field.validate = function () {
+    validate();
+    var value = field.input.value;
 
-  /**y el || lo que hace es que si lo primero es falso o undefined retorna lo de la derecha */
+    if (value.indexOf('@') === -1) {
+      field.errors.push('Debe ser un email');
+    }
+  };
 
-  return response || fetch(request);
-  /**El problema de usar cache asi por mas es que si actualizamos el index
-   * pero ya hay uno en cache seguira tomando el de cache y no hhara las actualizaciones
-   * nuevas para eevitar esto hacemos un metodo que busque y actualice la cache 
-   */
+  return field;
 }
 
-async function updateCache(request) {
-  const cache = await caches.open(VERSION);
-  const response = await fetch(request);
-  return response.status === 200 ? cache.put(request, response) : true;
-}
+var field = new Field(document.querySelector('#email'));
+/**Es importante mantener este orden porque si valido primero que es email
+ * y luego borro lo que escribi no me va a decir que email es un campo
+ * requerido si no que me va a decir que debe ser un email
+ * como si ahi ya hubiera escriton algo y vomo decia arriba es sostenible estar
+ * modificando la clase, con estos decorators estamos haciendo como un
+ * todo en uno y vamos agregando cosas
+ */
+
+field = RequiredFieldDecorator(field);
+field = EmailFieldDecorator(field);
+/**Una forma como me lo imagino es que los decorators es
+ * como si fueran una especie de dlcs que se van agregando a la
+ * clase principal pero sin modificarla
+ */
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -397,5 +403,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","sw.js"], null)
-//# sourceMappingURL=/sw.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","ejercicios/decorator/index.ts"], null)
+//# sourceMappingURL=/decorator.df4bca80.js.map
