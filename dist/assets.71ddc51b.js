@@ -151,50 +151,18 @@ function () {
   function MediaPlayer(config) {
     this.media = config.el;
     this.plugins = config.plugins || [];
-
-    this._initPlugins();
+    this.initPlugins();
   }
 
-  MediaPlayer.prototype._initPlugins = function () {
+  MediaPlayer.prototype.initPlugins = function () {
     var _this = this;
-
-    var player = {
-      play: function () {
-        return _this.play();
-      },
-      pause: function () {
-        return _this.pause();
-      },
-
-      /*Esto lo colocamos porque este es el que nos va a dar acceso a la clase
-      principal que es media player ya que dentro del metodo muted quiero acceder
-      a esta*/
-      media: this.media,
-
-      /*se pone get seguido de muted que es la propiedad virtual*/
-      get muted() {
-        return this.media.muted;
-      },
-
-      set muted(value) {
-        /*
-        if(value===true){
-          this.media.muted=true;
-        } else {
-          this.media.muted=false;
-        }
-        O la otra forma simple
-        */
-        this.media.muted = value;
-      }
-
-    };
     /*Si yo ahora mando player en vez del this que estoda la clase
     no todas las funciones van a tener acceso lo cual en parte es bueno porque
     asi puedo controlar que metodos pueden acceder a que */
 
+
     this.plugins.forEach(function (plugin) {
-      plugin.run(player);
+      plugin.run(_this);
     });
   };
 
@@ -417,7 +385,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42787" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46133" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

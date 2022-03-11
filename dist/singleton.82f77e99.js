@@ -117,117 +117,53 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"ejercicios/typescript/index.ts":[function(require,module,exports) {
-/*
-var message: string = 'Hello World';
-console.log(message);
-console.log("Hello, TypeScript");
+})({"ejercicios/singleton/Singleton.ts":[function(require,module,exports) {
+"use strict";
 
-function add(a: number, b: number){
-    return a + b;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-}
-const sum = add(2,3)
-console.log(sum)
-*/
-//Boolean en Typescript
-var muted = true;
-muted = false; //Numeros
+var Singleton =
+/** @class */
+function () {
+  function Singleton() {}
 
-var numerador = 42;
-var denominador = 6;
-var resultado = numerador / denominador; //String 
+  Singleton.getInstance = function () {
+    if (!Singleton.instance) {
+      Singleton.instance = new Singleton();
+    }
 
-var nombre = 'Juan';
-var saludo = "Me llamo ".concat(nombre); //Arreglos
-
-var people = [];
-people = ["carla", "nicole", "raul"]; //people.push(9000) no se puede porque solo es de strings
-
-var peopleAndNumbers = [];
-peopleAndNumbers.push('Carlos');
-peopleAndNumbers.push(5); //Enum variabnle que esta denotada a solo unos colres definidos
-
-var Color;
-
-(function (Color) {
-  Color["Rojo"] = "Rojo";
-  Color["verde"] = "Verde";
-  Color["Azul"] = "Azul";
-})(Color || (Color = {}));
-
-var colorFavorito = Color.verde; //Aqui no me imprime el color si no la posicion porque el enum asgina son las posiciones por eso
-//es que en el enum a cada opcion le debo asdignar un valor
-
-console.log("Mi color favorito es ".concat(colorFavorito)); //Any
-
-var comodin = "Joker";
-comodin = {
-  type: "Wildcard"
-}; //Object
-
-var someObject = {
-  type: "Wildcard"
-};
-/**Typescript deja especifico para los objetos y eso facilita muchas cosas*/
-//Funciones antes de abrir las llaves le podemos especificar el retorno como hicimos aqui
-
-function add(a, b) {
-  return a + b;
-}
-
-var sum = add(5, 4);
-/**Esto es como una funcion en cadena
- * es una pendejada hacerlo asi pero bueno
- * embeces la vida no es como queremos
- */
-
-function createAdder(a) {
-  return function (b) {
-    return b + a;
+    return Singleton.instance;
   };
-}
 
-var addFour = createAdder(4);
-var fourPlus6 = addFour(6);
-/**Con el signo de interrogacion le digo que ese parametro sera
- * opcional lo que significa que puede ser undefined o string
- */
-//function fullName(firstName: string, lastName: string = 'smith') asi lo que haria es que
+  return Singleton;
+}();
 
-/**si no ingresa un valor entonces pone ese por default */
+exports.default = Singleton;
+},{}],"ejercicios/singleton/index.ts":[function(require,module,exports) {
+"use strict";
 
-function fullName(firstName, lastName) {
-  return "".concat(firstName, " ").concat(lastName);
-}
-
-var miNombre = fullName('Juan');
-console.log(miNombre);
-/**Aqui estoy haciendo uso de esa interface y como en java
- * pues tiene que tener todo loq ue tiene esta inter4faz
- */
-
-var rect = {
-  ancho: 4,
-  alto: 6,
-  color: Color.Azul
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
 };
 
-function area(r) {
-  return r.alto * r.ancho;
-}
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var areaRect = area(rect);
-console.log(areaRect);
-console.log(rect.toString());
-/**Aqui es como si estuviera editando la funcion string */
+var Singleton_1 = __importDefault(require("./Singleton"));
+/**Aqui como podemos observar no interesa cuantos objetos cree
+ * siempre me va a mandar la misma instancia
+ */
 
-rect.toString = function () {
-  return this.color ? "Un rectangulo ".concat(this.color) : "Un rectangulo";
-};
 
-console.log(rect.toString());
-},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var a = Singleton_1.default.getInstance();
+var b = Singleton_1.default.getInstance();
+console.log('A es igual a b?', a === b);
+},{"./Singleton":"ejercicios/singleton/Singleton.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -430,5 +366,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","ejercicios/typescript/index.ts"], null)
-//# sourceMappingURL=/typescript.72c601f0.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","ejercicios/singleton/index.ts"], null)
+//# sourceMappingURL=/singleton.82f77e99.js.map

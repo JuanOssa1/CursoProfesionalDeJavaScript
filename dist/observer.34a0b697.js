@@ -117,116 +117,69 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"ejercicios/typescript/index.ts":[function(require,module,exports) {
-/*
-var message: string = 'Hello World';
-console.log(message);
-console.log("Hello, TypeScript");
+})({"ejercicios/observer/index.ts":[function(require,module,exports) {
+var BitcoinPrice =
+/** @class */
+function () {
+  function BitcoinPrice() {
+    var _this = this;
 
-function add(a: number, b: number){
-    return a + b;
+    this.observers = [];
+    /**Aqui lo que hace */
 
-}
-const sum = add(2,3)
-console.log(sum)
-*/
-//Boolean en Typescript
-var muted = true;
-muted = false; //Numeros
+    var el = document.querySelector("#value");
+    el.addEventListener('input', function () {
+      _this.notify(el.value);
+    });
+  }
 
-var numerador = 42;
-var denominador = 6;
-var resultado = numerador / denominador; //String 
-
-var nombre = 'Juan';
-var saludo = "Me llamo ".concat(nombre); //Arreglos
-
-var people = [];
-people = ["carla", "nicole", "raul"]; //people.push(9000) no se puede porque solo es de strings
-
-var peopleAndNumbers = [];
-peopleAndNumbers.push('Carlos');
-peopleAndNumbers.push(5); //Enum variabnle que esta denotada a solo unos colres definidos
-
-var Color;
-
-(function (Color) {
-  Color["Rojo"] = "Rojo";
-  Color["verde"] = "Verde";
-  Color["Azul"] = "Azul";
-})(Color || (Color = {}));
-
-var colorFavorito = Color.verde; //Aqui no me imprime el color si no la posicion porque el enum asgina son las posiciones por eso
-//es que en el enum a cada opcion le debo asdignar un valor
-
-console.log("Mi color favorito es ".concat(colorFavorito)); //Any
-
-var comodin = "Joker";
-comodin = {
-  type: "Wildcard"
-}; //Object
-
-var someObject = {
-  type: "Wildcard"
-};
-/**Typescript deja especifico para los objetos y eso facilita muchas cosas*/
-//Funciones antes de abrir las llaves le podemos especificar el retorno como hicimos aqui
-
-function add(a, b) {
-  return a + b;
-}
-
-var sum = add(5, 4);
-/**Esto es como una funcion en cadena
- * es una pendejada hacerlo asi pero bueno
- * embeces la vida no es como queremos
- */
-
-function createAdder(a) {
-  return function (b) {
-    return b + a;
+  BitcoinPrice.prototype.subscribe = function (observer) {
+    this.observers.push(observer);
   };
-}
 
-var addFour = createAdder(4);
-var fourPlus6 = addFour(6);
-/**Con el signo de interrogacion le digo que ese parametro sera
- * opcional lo que significa que puede ser undefined o string
+  BitcoinPrice.prototype.unsubscribe = function (observer) {
+    var index = this.observers.findIndex(function (obs) {
+      return obs === observer;
+    });
+    this.observers.splice(index, 1);
+  };
+
+  BitcoinPrice.prototype.notify = function (data) {
+    this.observers.forEach(function (observer) {
+      return observer.update(data);
+    });
+  };
+
+  return BitcoinPrice;
+}();
+
+var PriceDisplay =
+/** @class */
+function () {
+  function PriceDisplay() {
+    this.el = document.querySelector("#price");
+  }
+
+  PriceDisplay.prototype.update = function (data) {
+    this.el.innerText = data;
+  };
+
+  return PriceDisplay;
+}();
+
+var value = new BitcoinPrice();
+var display = new PriceDisplay();
+value.subscribe(display);
+/**Aqui limito el tiempo en que estara suscrito
+ * el elemento
  */
-//function fullName(firstName: string, lastName: string = 'smith') asi lo que haria es que
 
-/**si no ingresa un valor entonces pone ese por default */
-
-function fullName(firstName, lastName) {
-  return "".concat(firstName, " ").concat(lastName);
-}
-
-var miNombre = fullName('Juan');
-console.log(miNombre);
-/**Aqui estoy haciendo uso de esa interface y como en java
- * pues tiene que tener todo loq ue tiene esta inter4faz
- */
-
-var rect = {
-  ancho: 4,
-  alto: 6,
-  color: Color.Azul
-};
-
-function area(r) {
-  return r.alto * r.ancho;
-}
-
-var areaRect = area(rect);
-console.log(areaRect);
-console.log(rect.toString());
-/**Aqui es como si estuviera editando la funcion string */
-
-rect.toString = function () {
-  return this.color ? "Un rectangulo ".concat(this.color) : "Un rectangulo";
-};
-
-console.log(rect.toString());
+/*
+setTimeout(
+   ()=> value.unsubscribe(display),
+   5000
+)
+*/
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -430,5 +383,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","ejercicios/typescript/index.ts"], null)
-//# sourceMappingURL=/typescript.72c601f0.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","ejercicios/observer/index.ts"], null)
+//# sourceMappingURL=/observer.34a0b697.js.map
